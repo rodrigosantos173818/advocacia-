@@ -26,7 +26,7 @@ React + TypeScript em modo estrito, Vite, Tailwind CSS v4 pelo plugin oficial, M
 
 ```text
 src/
-  assets/images/office-original.png  Original ilustrativo
+  assets/images/                     Originais ilustrativos de retrato e ambiente
   components/                       Seções, marca e componentes compartilhados
   config/site.ts                    Textos, marca, imagens, SEO e destinos comerciais
   config/commercial.ts              Destino HTTPS e mensagem opcional para WhatsApp
@@ -65,7 +65,7 @@ Se a WR Tech fornecer e validar seu WhatsApp comercial, substitua somente `ctaUr
 
 ## Imagens
 
-O ambiente foi criado pela ferramenta integrada `image_gen`, sem referências fotográficas de terceiros, pessoas, marcas ou localização real. A legenda informa que é uma composição ilustrativa gerada por IA. O original está em `src/assets/images/office-original.png`; o prompt e a procedência estão em [docs/assets.md](docs/assets.md).
+O retrato do Hero apresenta uma profissional inteiramente fictícia, criada pela ferramenta integrada `image_gen`, com blazer azul-marinho e blusa marfim. A legenda identifica a geração por IA e o uso apenas para apresentação visual do projeto, sem atribuir nome, credenciais ou vínculo profissional real. O original está em `src/assets/images/professional-original.png`. O ambiente da seção Sobre e da imagem social continua sendo uma composição original gerada por IA, sem localização real, em `src/assets/images/office-original.png`. Os prompts e a procedência estão em [docs/assets.md](docs/assets.md).
 
 As variantes WebP locais já estão prontas. As licenças das fontes acompanham a publicação em `public/licenses/`. Para recriar as imagens e gerar novamente a imagem Open Graph:
 
@@ -113,10 +113,12 @@ O override `minimatch: ^11.0.1` corrige o aviso transitivo GHSA-g3hv-75wg-m249 n
 
 ## Publicar na Vercel
 
+Este repositório está conectado ao projeto `adivocacia` na Vercel, com endereço `https://adivocacia.vercel.app`. O fluxo existente publica a branch `main` automaticamente após um push aprovado pelo build. Confira o status Vercel associado ao commit e o conteúdo no domínio de produção antes de considerar uma atualização publicada.
+
 1. Envie o projeto a um repositório próprio, incluindo `package-lock.json`, fontes e assets locais. Não envie `node_modules/`, `.qa/`, `.npm-cache/` ou `dist/`.
 2. Importe esse repositório na Vercel e selecione o preset **Vite**, raiz deste projeto e uma versão Node compatível (24.x validada).
 3. Use instalação `npm ci`, build `npm run build` e diretório de saída `dist`. O `vercel.json` já declara build, saída e cabeçalhos.
 4. Publique a demo mantendo avisos de ficção, contatos inativos e bloqueios de indexação. Não são necessárias variáveis de ambiente.
 5. Verifique a URL publicada, assets, menu, política e cabeçalhos. Ao definir domínio final, configure a imagem social absoluta conforme explicado acima.
 
-O projeto está preparado para publicação estática na Vercel. O envio do código ao GitHub não realiza deploy por esta aplicação; a hospedagem deve ser configurada e validada separadamente.
+O deploy é executado pela integração GitHub/Vercel, sem backend ou credenciais de hospedagem no código da aplicação. A validação local não substitui a conferência do novo conteúdo no domínio publicado.

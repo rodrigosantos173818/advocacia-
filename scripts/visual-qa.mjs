@@ -23,6 +23,7 @@ try {
     await page.evaluate(() => window.scrollTo(0, 0))
     await page.screenshot({ path: `.qa/${width}-fold.png` })
     report.push(await page.evaluate(() => ({ width: innerWidth, scrollWidth: document.documentElement.scrollWidth, h1: document.querySelector('h1').getBoundingClientRect().toJSON(), brokenImages: [...document.images].filter(image => !image.complete || !image.naturalWidth).map(image => image.src) })))
+    await page.locator('.hero-figure').screenshot({ path: `.qa/${width}-hero-image.png` })
   }
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('http://127.0.0.1:5173/')
@@ -34,6 +35,13 @@ try {
   }
   await page.goto('http://127.0.0.1:5173/#privacidade')
   await page.screenshot({ path: '.qa/privacy.png', fullPage: true })
+  await page.route('**/images/professional-*.webp', route => route.abort())
+  await page.goto('http://127.0.0.1:5173/')
+  await page.waitForFunction(() => {
+    const image = document.querySelector('.hero-image')
+    return image.complete && image.naturalWidth > 0 && image.currentSrc.endsWith('/professional-fallback.jpg')
+  })
+  await page.locator('.hero-figure').screenshot({ path: '.qa/hero-fallback.png' })
   await writeFile('.qa/report.json', JSON.stringify({ report, errors }, null, 2))
   console.info(JSON.stringify({ report, errors }, null, 2))
 } finally { await browser.close() }

@@ -56,7 +56,7 @@ O relatório bruto fica em `.qa/report.json`; artefatos Playwright ficam em `pla
 ## Conteúdo, privacidade e segurança
 
 - Escritório fictício indicado no cabeçalho sticky, hero, imagens, contato e rodapé.
-- Sem OAB, currículo, depoimentos, estatísticas, pessoas, clientes ou resultados inventados.
+- Sem OAB, currículo, depoimentos, estatísticas, clientes ou resultados inventados. O retrato adicionado posteriormente ao Hero representa apenas uma profissional fictícia gerada por IA, explicitamente identificada como apresentação visual.
 - Sem formulário ativo, telefone, e-mail, endereço ou WhatsApp jurídico fictício. O CTA de escritório é desabilitado e tem explicação por `aria-describedby`.
 - Destino comercial real centralizado na configuração da WR Tech; nenhuma comunicação foi enviada.
 - Fontes e imagens locais, sem mapa incorporado, analytics ou pixels.
@@ -69,3 +69,21 @@ O relatório bruto fica em `.qa/report.json`; artefatos Playwright ficam em `pla
 Não foram executados deploy, validação de cabeçalhos em hospedagem, testes de prévia social em domínio público, medição Lighthouse/Core Web Vitals, testes em dispositivos físicos, Firefox/Safari, leitor de tela ou auditoria manual exaustiva de acessibilidade. Mobile é emulação Chromium, sem afirmar equivalência a Safari real.
 
 O domínio definitivo é necessário para canonical e imagem OG absoluta. Um cliente real exigirá dados profissionais, contatos, imagens e permissões confirmados, revisão de publicidade profissional vigente, privacidade ajustada e validação dos fluxos de coleta que eventualmente forem solicitados. Esses dados não foram inventados nem ativados nesta demo.
+
+## Atualização do Hero — retrato fictício
+
+O ambiente do Hero foi substituído por um retrato original de uma profissional fictícia gerada pela ferramenta integrada `image_gen`. Foram preservados título, descrição, botões, estrutura, marca e paleta. A legenda agora informa: “Profissional fictícia gerada por IA • Apenas para apresentação visual do projeto.” O texto alternativo e a política de privacidade também identificam a personagem fictícia, sem nome ou credenciais.
+
+Arquivos afetados: `src/config/site.ts`, `src/components/Hero.tsx` (fallback), `src/styles/globals.css`, originais/variantes em `src/assets/images/` e `public/images/`, scripts de assets e QA, README e documentação. O original e o prompt completo estão documentados em `docs/assets.md`. Os dois WebP antigos do Hero foram removidos; os assets da seção Sobre e Open Graph permaneceram iguais.
+
+Validação desta atualização:
+
+- `npm run lint`, `npm run typecheck` e `npm run build`: aprovados; build final inclui novamente `tsc --noEmit`.
+- `npm test`: **12 passed (7.7s)** na execução final, incluindo menu, foco, privacidade e auditoria Axe desktop/mobile, sem novos testes para apresentação estática reversível.
+- `node scripts/visual-qa.mjs`: sete larguras sem overflow, imagens quebradas ou erros JavaScript. Capturas específicas do retrato/legenda em `.qa/*-hero-image.png`, além das capturas completas existentes. Rosto e cabelo conferidos visualmente em todas as sete larguras.
+- Variantes locais WebP 1000 × 1250 e 600 × 645, com recorte no topo; CSS mantém o mesmo alinhamento. Ajustado o filete dourado móvel para terminar antes da legenda e evitar sobreposição.
+- Fallback JPEG 400 × 500 do mesmo retrato, sem voltar à imagem de escritório. O script de QA bloqueia os dois WebP, aguarda o JPEG carregar e captura `.qa/hero-fallback.png`. A proteção impede reaplicar o fallback em ciclo se ele também falhar.
+- Reviewer independente conferiu composição e referências; inconsistência documental sobre ausência de pessoas e fallback de escritório foram corrigidos.
+- `git diff --check`: sem problemas de whitespace. Nenhuma dependência adicionada e nenhum contrato público alterado.
+
+**Status: APROVADO localmente.** As evidências desta seção registram a validação anterior ao versionamento e à publicação autorizados posteriormente. A integração existente entre `main` e o projeto Vercel `adivocacia` publica em `https://adivocacia.vercel.app`; cada atualização deve ter seu status e conteúdo conferidos nesse domínio. Continuam sem execução os testes em dispositivos físicos e em Safari/Firefox.

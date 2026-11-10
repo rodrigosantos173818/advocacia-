@@ -14,7 +14,13 @@ export function Hero() {
         <p className="hero-demo"><CircleCheck size={14} aria-hidden="true" />Uma experiência de site. Um escritório fictício.</p>
       </Reveal>
       <Reveal delay={0.15} className="hero-visual">
-        <figure className="hero-figure"><picture><source media="(max-width: 600px)" srcSet={hero.imageSmall} /><img className="hero-image" src={hero.image} alt={hero.imageAlt} width="1000" height="1250" fetchPriority="high" onError={event => { event.currentTarget.onerror = null; event.currentTarget.src = '/images/office-fallback.svg'; const source = event.currentTarget.parentElement?.querySelector('source'); source?.remove() }} /></picture><figcaption>{hero.imageCaption}</figcaption></figure>
+        <figure className="hero-figure"><picture><source media="(max-width: 600px)" srcSet={hero.imageSmall} /><img className="hero-image" src={hero.image} alt={hero.imageAlt} width="1000" height="1250" fetchPriority="high" onError={event => {
+          const image = event.currentTarget
+          if (image.dataset.fallbackApplied) return
+          image.dataset.fallbackApplied = 'true'
+          image.parentElement?.querySelector('source')?.remove()
+          image.src = '/images/professional-fallback.jpg'
+        }} /></picture><figcaption>{hero.imageCaption}</figcaption></figure>
         <div className="image-signature"><span className="signature-symbol" aria-hidden="true">M<span>∕</span>A</span><span>{hero.signature}<small>O CUIDADO COMO PONTO DE PARTIDA</small></span></div>
         <span className="image-side-label" aria-hidden="true">MONTEIRO & ASSOCIADOS · ADVOCACIA</span>
       </Reveal>
