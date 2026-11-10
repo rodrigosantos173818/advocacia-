@@ -1,0 +1,1 @@
+Imagens de ambiente geradas por IA para esta demonstração, sem pessoas, marcas ou localização real. Fonte original: src/assets/images/office-original.png. Variantes geradas por scripts/prepare-assets.mjs. Não são fotografias de um escritório existente.
